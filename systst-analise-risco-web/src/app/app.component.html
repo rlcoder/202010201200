@@ -1,0 +1,50 @@
+<div class="container-fluid">
+  <div class="mt-5 text-center">
+    <h3>Análise de Risco</h3>
+  </div>
+  <div class="row align-content-center">
+    <div class="col-md-6 offset-3 mt-4">
+     <form [formGroup]="filtroForm">
+       <div *ngIf="error" class="alert alert-danger" role="alert">
+         Falha ao tentar buscar dados do veiculo
+       </div>
+       <div class="form-group">
+         <label>Pesquisar veículos por classificação de Risco</label>
+         <div class="input-group">
+           <select class="custom-select" formControlName="selectRisco">
+             <option value="TODOS" selected>Selecione uma opção</option>
+             <option value="ALTO">Alto</option>
+             <option value="MEDIO">Médio</option>
+             <option value="BAIXO">Baixo</option>
+           </select>
+           <button class="btn btn-primary" (click)="buscarVeiculos()">Pesquisar</button>
+         </div>
+       </div>
+     </form>
+    </div>
+
+    <table id="sailorTable" class="table table-striped table-bordered" width="100%">
+
+      <thead>
+      <tr>
+        <th>Modelo</th>
+        <th>Marca</th>
+        <th>Ano</th>
+        <th>Classificação de Risco</th>
+        <th>Valor</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let veiculo of listaVeiculos;">
+        <td>{{veiculo?.modelo}}</td>
+        <td>{{veiculo?.marca}}</td>
+        <td>{{veiculo?.ano}}</td>
+        <td>{{veiculo?.classificacaoRisco}}</td>
+        <td>{{getValorFormatado(veiculo?.valor)}}</td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+</div>
