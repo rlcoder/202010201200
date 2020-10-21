@@ -1,36 +1,22 @@
 package br.com.tst.repository;
 
+import br.com.tst.domain.Veiculo;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+@Repository
+public interface VeiculoRepository extends JpaRepository<Veiculo, Long> {
 
-import br.com.tst.domain.Veiculo;
+    @Query(value = "select v from Veiculo v where v.ano < 2010")
+    List<Veiculo> buscarVeiculosComRiscoAlto();
 
-@Component
-public class VeiculoRepository{
-	
-	@Autowired 
-	private VeiculoTable table;
-	
-	public Veiculo save ( Veiculo veiculo ) {
-		VeiculoTable.getInstance().getRecords().add( veiculo );
-		int i = VeiculoTable.getInstance().getRecords().indexOf( veiculo );
-		Long id = Long.parseLong( String.valueOf( i ) );
-		veiculo.setId(id);
-		return veiculo; 
-		
-	}
+    @Query(value = "select v from Veiculo v where v.ano >= 2010 and v.ano < 2015")
+    List<Veiculo> buscarVeiculosComRiscoMedio();
 
-	public void delete ( Veiculo veiculo ) {
-	}
+    @Query(value = "select v from Veiculo v where v.ano >= 2015")
+    List<Veiculo> buscarVeiculosComRiscoBaixo();
 
-	public Veiculo update ( Veiculo veiculo ) {
-		return null;
-	}
-	
-	public List<Veiculo> findAll ( ) {
-		return VeiculoTable.getInstance().getRecords();
-	}
-	
 }
